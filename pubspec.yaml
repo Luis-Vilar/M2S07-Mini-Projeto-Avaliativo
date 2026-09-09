@@ -7,10 +7,10 @@ environment:
   sdk: ^3.13.2
 
 dependencies:
-  bloc: ^9.2.1
   dio: ^5.11.1
   flutter:
     sdk: flutter
+  flutter_bloc: ^9.1.1
   get_it: ^9.2.1
   shared_preferences: ^2.5.5
   sqflite: ^2.4.3
