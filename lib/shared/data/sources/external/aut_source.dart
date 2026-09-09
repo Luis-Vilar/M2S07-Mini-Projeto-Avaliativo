@@ -9,11 +9,11 @@ class AuthSource implements AuthInterfase {
   @override
   Future<Result> login(UserLoginModel user) async {
     try {
-      final data = await _httpClient.post(
+      final result = await _httpClient.post(
         '/auth/login',
         body: {'username': user.username, 'password': user.password},
       );
-      return Result.ok(data);
+      return result;
     } catch (e) {
       return Result.error(
         Exception('Não foi possível fazer login. Error : ${e.toString()}'),
