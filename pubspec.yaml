@@ -7,8 +7,12 @@ environment:
   sdk: ^3.13.2
 
 dependencies:
+  bloc: ^9.2.1
+  dio: ^5.11.1
   flutter:
     sdk: flutter
+  shared_preferences: ^2.5.5
+  sqflite: ^2.4.3
 
 dev_dependencies:
   flutter_test:
