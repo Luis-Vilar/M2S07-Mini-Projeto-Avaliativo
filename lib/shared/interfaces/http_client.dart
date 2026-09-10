@@ -1,6 +1,6 @@
 import 'package:todo_app/shared/result_pattern.dart';
 
-abstract class HttpClientInterfase {
+abstract class HttpClientInterface {
   Future<Result> get(String endpoint, {Map<String, String>? headers});
 
   Future<Result> post(

@@ -4,8 +4,8 @@ import 'package:todo_app/shared/interfaces/auth.dart';
 import 'package:todo_app/shared/interfaces/http_client.dart';
 import 'package:todo_app/shared/result_pattern.dart';
 
-class AuthSource implements AuthInterfase {
-  final _httpClient = injection.get<HttpClientInterfase>();
+class AuthSource implements AuthInterface {
+  final _httpClient = injection.get<HttpClientInterface>();
   @override
   Future<Result> login(UserLoginModel user) async {
     try {

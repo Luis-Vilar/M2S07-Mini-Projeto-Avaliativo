@@ -7,8 +7,8 @@ import 'package:todo_app/shared/interfaces/http_client.dart';
 final injection = GetIt.instance;
 
 void initDependencyInjection() {
-  injection.registerLazySingleton<HttpClientInterfase>(
+  injection.registerLazySingleton<HttpClientInterface>(
     () => HttpClientDioImplementation(),
   );
-  injection.registerFactory<AuthInterfase>(() => AuthSource());
+  injection.registerFactory<AuthInterface>(() => AuthSource());
 }

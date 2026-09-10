@@ -12,7 +12,7 @@ part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc() : super(LoginLoading()) {
-    final auth = injection.get<AuthInterfase>();
+    final auth = injection.get<AuthInterface>();
 
     on<LoginUserEvent>((event, emit) async {
       emit(LoginLoading());
