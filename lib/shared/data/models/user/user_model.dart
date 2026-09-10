@@ -29,4 +29,24 @@ final class UserLoggedModel extends UserModel {
     required this.accessToken,
     required this.refreshToken,
   });
+
+  factory UserLoggedModel.fromJson(Map<String, dynamic> json) {
+    return UserLoggedModel(
+      username: json['username'] as String,
+      id: json['id'] as int,
+      email: json['email'] as String,
+      firstName: json['firstName'] as String,
+      lastName: json['lastName'] as String,
+      gender: json['gender'] as String,
+      image: json['image'] as String,
+      accessToken: json['accessToken'] as String,
+      refreshToken: json['refreshToken'] as String,
+    );
+  }
+
+  @override
+  String toString() =>
+      'UserLoggedModel(username: $username, id: $id, email: $email, '
+      'firstName: $firstName, lastName: $lastName, gender: $gender, '
+      'image: $image, accessToken: $accessToken, refreshToken: $refreshToken)';
 }
