@@ -15,6 +15,7 @@ class LoggedView extends StatefulWidget {
 }
 
 class _LoggedViewState extends State<LoggedView> {
+  bool tryAgain = false;
   Future<void> _showLogoutDialog() async {
     final shouldLogout = await showDialog<bool>(
       context: context,
@@ -84,6 +85,14 @@ class _LoggedViewState extends State<LoggedView> {
             ],
           ),
           actions: [
+            ?tryAgain
+                ? IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.replay_outlined),
+                    tooltip: 'Recarregar',
+                    padding: const EdgeInsets.only(right: 8),
+                  )
+                : null,
             IconButton(
               onPressed: _showLogoutDialog,
               icon: const Icon(Icons.logout),
@@ -97,6 +106,9 @@ class _LoggedViewState extends State<LoggedView> {
             if (state is TodosError) {
               ScaffoldMessenger.of(context)
                   .showSnackBar(SnackBar(content: Text(state.message)));
+              setState(() {
+                tryAgain = true;
+              });
             }
           },
           builder: (context, state) {
@@ -142,7 +154,12 @@ class _LoggedViewState extends State<LoggedView> {
                   );
                 },
               ),
-              TodosError(:final message) => Center(child: Text(message)),
+              TodosError(:final message) => Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(36),
+                  child: Text(message),
+                ),
+              ),
               TodosInitial() => const SizedBox.shrink(),
             };
           },
