@@ -12,7 +12,7 @@ class SqfliteTodoRepository implements TodoRepositoryInterface {
       'userId': todo.userId,
       'completed': todo.completed == true ? 1 : 0,
     };
-    await db.insert('todos', data);
+    await db.insert('todos', data, conflictAlgorithm: .ignore);
   }
 
   @override
@@ -22,14 +22,34 @@ class SqfliteTodoRepository implements TodoRepositoryInterface {
   }
 
   @override
-  Future<List<TodoModel>> getTodos() {
-    // TODO: implement getTodos
-    throw UnimplementedError();
+  Future<List<TodoModel>> getTodos() async {
+    final db = await DbHelper.db;
+    final rows = await db.query('todos', orderBy: 'id ASC');
+
+    return rows
+        .map(
+          (row) => TodoModel(
+            id: row['id'] as int,
+            todo: row['todo'] as String,
+            completed: (row['completed'] as int) == 1,
+            userId: row['userId'] as int,
+          ),
+        )
+        .toList();
   }
 
   @override
-  Future<void> updateTodo(TodoModel todo) {
-    // TODO: implement updateTodo
-    throw UnimplementedError();
+  Future<void> updateTodo(TodoModel todo) async {
+    final db = await DbHelper.db;
+    await db.update(
+      'todos',
+      {
+        'todo': todo.todo,
+        'completed': todo.completed ? 1 : 0,
+        'userId': todo.userId,
+      },
+      where: 'id = ?',
+      whereArgs: [todo.id],
+    );
   }
 }
