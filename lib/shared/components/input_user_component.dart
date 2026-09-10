@@ -7,8 +7,14 @@ class InputUserComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       controller: userController,
+      validator: (value) {
+        if (value == null || value.trim().isEmpty) {
+          return 'Informe o usuário';
+        }
+        return null;
+      },
       decoration: InputDecoration(
         labelText: 'Usuario',
         labelStyle: const TextStyle(color: Colors.blueGrey),
