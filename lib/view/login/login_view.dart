@@ -13,6 +13,7 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
+  final formKey = GlobalKey<FormState>();
   final TextEditingController userController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
@@ -49,6 +50,7 @@ class _LoginViewState extends State<LoginView> {
             return switch (state) {
               LoginLoading() => const SplashView(),
               _ => LoginFormComponent(
+                formKey: formKey,
                 userController: userController,
                 passwordController: passwordController,
               ),
