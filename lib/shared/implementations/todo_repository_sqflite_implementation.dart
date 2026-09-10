@@ -30,7 +30,7 @@ class SqfliteTodoRepository implements TodoRepositoryInterface {
   @override
   Future<List<TodoModel>> getTodos() async {
     final db = await DbHelper.db;
-    final rows = await db.query('todos', orderBy: 'id ASC');
+    final rows = await db.query('todos');
 
     return rows
         .map(
