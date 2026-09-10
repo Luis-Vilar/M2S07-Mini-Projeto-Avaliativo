@@ -22,7 +22,7 @@ class TodosBloc extends Bloc<TodosEvent, TodosState> {
         }
 
         if (resultSessionData is! Ok<UserLoggedModel>) {
-          throw Exception('No se pudo validar la sesión actual.');
+          throw Exception('Não foi possível validar a sessão.');
         }
 
         final sessionUser = resultSessionData.value;
