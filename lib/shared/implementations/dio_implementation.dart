@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:todo_app/shared/interfases/http_client.dart';
+import 'package:todo_app/shared/interfaces/http_client.dart';
 import 'package:todo_app/shared/result_pattern.dart';
 
 final class HttpClientDioImplementation implements HttpClientInterfase {

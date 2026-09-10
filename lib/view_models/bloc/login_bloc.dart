@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_app/core/injection.dart';
 import 'package:todo_app/shared/data/models/user/user_model.dart';
-import 'package:todo_app/shared/interfases/auth.dart';
+import 'package:todo_app/shared/interfaces/auth.dart';
 import 'package:todo_app/shared/result_pattern.dart';
 
 part 'login_event.dart';
