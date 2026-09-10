@@ -22,12 +22,23 @@ class TodosRepository {
 
   Future<void> deleteTodo(int id) => _todoRepository.deleteTodo(id);
 
-  Future<Result<List<TodoModel>>> syncTodos() async {
-    final result = await _todoSource.getTodos();
+  Future<Result<List<TodoModel>>> syncTodos(int userId) async {
+    final localTodos = await getTodos();
+    final hasTodosFromAnotherUser = localTodos.any(
+      (todo) => todo.userId != userId,
+    );
+
+    if (hasTodosFromAnotherUser) {
+      await deleteTodos();
+    }
+
+    final result = await _todoSource.getTodos(userId);
     if (result is Ok<List<TodoModel>>) {
       await insertTodos(result.value);
       return Result.ok(await getTodos());
     }
     return result;
   }
+
+  Future<void> deleteTodos() => _todoRepository.deleteTodos();
 }

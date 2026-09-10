@@ -8,9 +8,9 @@ class TodoSource implements TodoSourceInterface {
   final _httpClient = injection.get<HttpClientInterface>();
 
   @override
-  Future<Result<List<TodoModel>>> getTodos() async {
+  Future<Result<List<TodoModel>>> getTodos(int userId) async {
     try {
-      final result = await _httpClient.get('/todos');
+      final result = await _httpClient.get('/todos/user/$userId');
 
       if (result is ResultError) {
         return Result.error(result.error);

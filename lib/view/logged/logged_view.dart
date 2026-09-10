@@ -48,7 +48,7 @@ class _LoggedViewState extends State<LoggedView> {
     final user = ModalRoute.of(context)!.settings.arguments as UserLoggedModel;
 
     return BlocProvider<TodosBloc>(
-      create: (_) => TodosBloc()..add(TodosSyncEvent()),
+      create: (_) => TodosBloc()..add(TodosSyncEvent(userId: user.id)),
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.blue,
