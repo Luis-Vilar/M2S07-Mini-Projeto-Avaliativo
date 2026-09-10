@@ -22,6 +22,12 @@ class SqfliteTodoRepository implements TodoRepositoryInterface {
   }
 
   @override
+  Future<void> deleteTodos() async {
+    final db = await DbHelper.db;
+    await db.delete('todos');
+  }
+
+  @override
   Future<List<TodoModel>> getTodos() async {
     final db = await DbHelper.db;
     final rows = await db.query('todos', orderBy: 'id ASC');
