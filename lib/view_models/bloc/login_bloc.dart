@@ -20,7 +20,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
       if (loginResult is Ok) {
         //todo implementar shared_preferences
-        log(loginResult.value.toString());
+        // log(loginResult.value.toString());
+
+        final userLoggedData = UserLoggedModel.fromJson(loginResult.value);
+
+        log(userLoggedData.toString());
         emit(LoginSuccess());
       } else if (loginResult is ResultError) {
         //todo implementar snackbar informando erro
