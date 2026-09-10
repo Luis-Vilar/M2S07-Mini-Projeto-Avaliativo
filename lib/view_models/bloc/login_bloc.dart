@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_app/core/injection.dart';
 import 'package:todo_app/shared/data/models/user/user_model.dart';
+import 'package:todo_app/shared/data/sources/local/shared_preferences.dart';
 import 'package:todo_app/shared/interfaces/auth.dart';
 import 'package:todo_app/shared/result_pattern.dart';
 
@@ -14,20 +15,37 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc() : super(LoginInitial()) {
     final auth = injection.get<AuthInterface>();
 
+    on<CheckSessionEvent>((event, emit) async {
+      emit(LoginLoading());
+
+      final sessionResult = await getSessionData();
+      if (sessionResult is Ok<UserLoggedModel>) {
+        log(sessionResult.value.toString());
+        emit(LoginSuccess(userLoggedModel: sessionResult.value));
+      } else {
+        emit(LoginInitial());
+      }
+    });
+
     on<LoginUserEvent>((event, emit) async {
       emit(LoginLoading());
+
+      final sessionResult = await getSessionData();
+      if (sessionResult is Ok<UserLoggedModel>) {
+        log(sessionResult.value.toString());
+        emit(LoginSuccess(userLoggedModel: sessionResult.value));
+        return;
+      }
+
       final loginResult = await auth.login(event.user);
 
       if (loginResult is Ok) {
-        //todo implementar shared_preferences
-        // log(loginResult.value.toString());
-
         final userLoggedData = UserLoggedModel.fromJson(loginResult.value);
 
+        await saveSessionData(userLoggedData);
         log(userLoggedData.toString());
-        emit(LoginSuccess());
+        emit(LoginSuccess(userLoggedModel: userLoggedData));
       } else if (loginResult is ResultError) {
-        //todo implementar snackbar informando erro
         final error = loginResult.error;
         if (error is DioException) {
           emit(
