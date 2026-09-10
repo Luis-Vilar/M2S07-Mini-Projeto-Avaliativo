@@ -1,7 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_app/core/injection.dart';
 import 'package:todo_app/shared/data/models/todo/todo_model.dart';
+import 'package:todo_app/shared/data/models/user/user_model.dart';
 import 'package:todo_app/shared/data/repositories/todos/todos_repository.dart';
+import 'package:todo_app/shared/data/sources/local/shared_preferences.dart';
 import 'package:todo_app/shared/result_pattern.dart';
 
 part 'todos_event.dart';
@@ -13,7 +15,19 @@ class TodosBloc extends Bloc<TodosEvent, TodosState> {
 
     on<TodosSyncEvent>((event, emit) async {
       await _runWithLoading(emit, () async {
-        final result = await repository.syncTodos();
+        final resultSessionData = await getSessionData();
+        if (resultSessionData is ResultError) {
+          final errorResult = resultSessionData as ResultError<UserLoggedModel>;
+          throw errorResult.error;
+        }
+
+        if (resultSessionData is! Ok<UserLoggedModel>) {
+          throw Exception('No se pudo validar la sesión actual.');
+        }
+
+        final sessionUser = resultSessionData.value;
+        final result = await repository.syncTodos(sessionUser.id);
+
         if (result is ResultError) {
           final errorResult = result as ResultError<List<TodoModel>>;
           throw errorResult.error;

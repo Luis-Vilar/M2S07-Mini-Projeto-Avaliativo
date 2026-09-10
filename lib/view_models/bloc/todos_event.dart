@@ -2,23 +2,28 @@ part of 'todos_bloc.dart';
 
 sealed class TodosEvent {}
 
-final class TodosSyncEvent extends TodosEvent;
-final class TodosCreateEvent extends TodosEvent {
-	TodosCreateEvent({required this.todo});
+final class TodosSyncEvent extends TodosEvent {
+  TodosSyncEvent({required this.userId});
 
-	final TodoModel todo;
+  int userId;
+}
+
+final class TodosCreateEvent extends TodosEvent {
+  TodosCreateEvent({required this.todo});
+
+  final TodoModel todo;
 }
 
 final class TodosReadEvent extends TodosEvent;
 
 final class TodosUpdateEvent extends TodosEvent {
-	TodosUpdateEvent({required this.todo});
+  TodosUpdateEvent({required this.todo});
 
-	final TodoModel todo;
+  final TodoModel todo;
 }
 
 final class TodosDeleteEvent extends TodosEvent {
-	TodosDeleteEvent({required this.id});
+  TodosDeleteEvent({required this.id});
 
-	final int id;
+  final int id;
 }
