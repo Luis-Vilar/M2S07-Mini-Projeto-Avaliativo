@@ -111,10 +111,20 @@ class _LoggedViewState extends State<LoggedView> {
                 itemBuilder: (context, index) {
                   final todo = todos[index];
                   return Card(
+                    color: todo.completed ? Colors.pink[100] : Colors.white,
                     child: CheckboxListTile(
                       value: todo.completed,
-                      title: Text(todo.todo),
-                      subtitle: Text('Usuario: ${todo.userId}'),
+                      title: Text(
+                        todo.todo,
+                        style: TextStyle(
+                          decoration: todo.completed
+                              ? TextDecoration.lineThrough
+                              : TextDecoration.none,
+                          color: todo.completed ? Colors.brown : Colors.black87,
+                          fontWeight: .bold,
+                        ),
+                      ),
+                      subtitle: Text('ID da Tarefa: ${todo.id}'),
                       onChanged: (completed) {
                         if (completed == null) return;
                         context.read<TodosBloc>().add(
