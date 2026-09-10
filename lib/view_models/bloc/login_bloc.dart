@@ -26,16 +26,15 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         //todo implementar snackbar informando erro
         final error = loginResult.error;
         if (error is DioException) {
-          log(
-            error.response?.data?.toString() ??
-                error.message ??
-                error.toString(),
+          emit(
+            LoginError(
+              message:
+                  error.response?.data?.toString() ?? error.message.toString(),
+            ),
           );
         } else {
-          log(error.toString());
+          emit(LoginError(message: error.toString()));
         }
-
-        emit(LoginError());
       }
     });
   }
