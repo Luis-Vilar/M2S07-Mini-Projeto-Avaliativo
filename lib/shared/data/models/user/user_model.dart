@@ -43,6 +43,19 @@ final class UserLoggedModel extends UserModel {
       refreshToken: json['refreshToken'] as String,
     );
   }
+  Map<String, dynamic> toJson() {
+    return {
+      'username': username,
+      'id': id,
+      'email': email,
+      'firstName': firstName,
+      'lastName': lastName,
+      'gender': gender,
+      'image': image,
+      'accessToken': accessToken,
+      'refreshToken': refreshToken,
+    };
+  }
 
   @override
   String toString() =>
