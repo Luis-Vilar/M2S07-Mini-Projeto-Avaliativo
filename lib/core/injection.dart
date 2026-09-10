@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:todo_app/shared/data/repositories/todos/todos_repository.dart';
 import 'package:todo_app/shared/data/sources/external/auth_source.dart';
 import 'package:todo_app/shared/data/sources/external/todo_source.dart';
 import 'package:todo_app/shared/implementations/dio_implementation.dart';
@@ -14,9 +15,10 @@ void initDependencyInjection() {
   injection.registerLazySingleton<HttpClientInterface>(
     () => HttpClientDioImplementation(),
   );
-  injection.registerFactory<AuthInterface>(() => AuthSource());
-  injection.registerFactory<TodoSourceInterface>(() => TodoSource());
   injection.registerLazySingleton<TodoRepositoryInterface>(
     () => SqfliteTodoRepository(),
   );
+  injection.registerFactory<AuthInterface>(() => AuthSource());
+  injection.registerFactory<TodoSourceInterface>(() => TodoSource());
+  injection.registerFactory<TodosRepository>(() => TodosRepository());
 }

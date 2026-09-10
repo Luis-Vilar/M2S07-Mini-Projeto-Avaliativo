@@ -14,10 +14,19 @@ class TodosRepository {
     }
   }
 
+  Future<void> insertTodo(TodoModel todo) => _todoRepository.insertTodo(todo);
+
+  Future<List<TodoModel>> getTodos() => _todoRepository.getTodos();
+
+  Future<void> updateTodo(TodoModel todo) => _todoRepository.updateTodo(todo);
+
+  Future<void> deleteTodo(int id) => _todoRepository.deleteTodo(id);
+
   Future<Result<List<TodoModel>>> syncTodos() async {
     final result = await _todoSource.getTodos();
     if (result is Ok<List<TodoModel>>) {
       await insertTodos(result.value);
+      return Result.ok(await getTodos());
     }
     return result;
   }
