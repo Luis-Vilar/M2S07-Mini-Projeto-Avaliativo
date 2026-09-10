@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_app/shared/components/input_password_component.dart';
 import 'package:todo_app/shared/components/input_user_component.dart';
 import 'package:todo_app/shared/components/login_button_component.dart';
+import 'package:todo_app/view/splash_screen/splash_view.dart';
+import 'package:todo_app/view_models/bloc/login_bloc.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -23,6 +26,21 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
+    return BlocProvider<LoginBloc>(
+      create: (_) => LoginBloc(),
+      child: BlocBuilder<LoginBloc, LoginState>(
+        builder: (context, state) {
+          if (state is LoginLoading) {
+            return const SplashView();
+          }
+
+          return _buildLoginForm();
+        },
+      ),
+    );
+  }
+
+  Widget _buildLoginForm() {
     return Scaffold(
       body: SafeArea(
         child: LayoutBuilder(
@@ -38,7 +56,6 @@ class _LoginViewState extends State<LoginView> {
                       crossAxisAlignment: .stretch,
                       children: [
                         const SizedBox(height: 60),
-
                         const Center(
                           child: Icon(
                             Icons.person,
@@ -46,16 +63,13 @@ class _LoginViewState extends State<LoginView> {
                             color: Colors.blue,
                           ),
                         ),
-
                         const SizedBox(height: 30),
-
                         const Text(
                           'Bem-vindo de volta!',
                           textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 28, fontWeight: .w600),
                         ),
                         const SizedBox(height: 10),
-
                         const Text(
                           'Organize suas tarefas e conquiste o seu dia.',
                           textAlign: TextAlign.center,
@@ -65,22 +79,16 @@ class _LoginViewState extends State<LoginView> {
                           ),
                         ),
                         const SizedBox(height: 40),
-
                         InputUserComponent(userController: userController),
-
                         const SizedBox(height: 20),
-
                         InputPasswordComponent(
                           passwordController: passwordController,
                         ),
-
                         const SizedBox(height: 35),
-
                         LoginButtonComponent(
                           userController: userController,
                           passwordController: passwordController,
                         ),
-
                         const SizedBox(height: 20),
                       ],
                     ),
