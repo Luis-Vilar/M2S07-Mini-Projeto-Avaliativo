@@ -12,15 +12,15 @@ class TodosRepository implements TodoRepositoryInterface {
   @override
   Future<void> insertTodos(List<TodoModel> todos) async {
     for (final todo in todos) {
-      await _todoCrud.insertTodo(todo);
+      await _todoCrud.createTodo(todo);
     }
   }
 
   @override
-  Future<void> insertTodo(TodoModel todo) => _todoCrud.insertTodo(todo);
+  Future<void> insertTodo(TodoModel todo) => _todoCrud.createTodo(todo);
 
   @override
-  Future<List<TodoModel>> getTodos() => _todoCrud.getTodos();
+  Future<List<TodoModel>> getTodos() => _todoCrud.readTodos();
 
   @override
   Future<void> updateTodo(TodoModel todo) => _todoCrud.updateTodo(todo);
@@ -48,5 +48,5 @@ class TodosRepository implements TodoRepositoryInterface {
   }
 
   @override
-  Future<void> deleteTodos() => _todoCrud.deleteTodos();
+  Future<void> deleteTodos() => _todoCrud.deleteAllTodos();
 }
