@@ -15,7 +15,7 @@ final class HttpClientDioImplementation implements HttpClientInterface {
 
       return Result.ok(response.data);
     } on DioException catch (error) {
-      return Result.error(error);
+      return Result.error(_toException(error));
     } on Exception catch (error) {
       return Result.error(error);
     }
@@ -33,12 +33,21 @@ final class HttpClientDioImplementation implements HttpClientInterface {
         data: body,
         options: Options(headers: headers),
       );
-
       return Result.ok(response.data);
     } on DioException catch (error) {
-      return Result.error(error);
+      return Result.error(_toException(error));
     } on Exception catch (error) {
       return Result.error(error);
     }
+  }
+
+  Exception _toException(DioException error) {
+    final message = switch (error.type) {
+      DioExceptionType.connectionError =>
+        'Sem internet?. Verifica a conexão e tenta novamente',
+      _ => 'Verifica suas credencias e tenta novamente.',
+    };
+
+    return Exception(message);
   }
 }

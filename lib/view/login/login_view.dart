@@ -38,12 +38,9 @@ class _LoginViewState extends State<LoginView> {
                 arguments: state.userLoggedModel,
               );
             } else if (state is LoginError) {
-              String message = state.message.toString();
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('Não foi possível iniciar sessão $message'),
-                ),
-              );
+              String message = state.message;
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text(message)));
             }
           },
           builder: (context, state) {
