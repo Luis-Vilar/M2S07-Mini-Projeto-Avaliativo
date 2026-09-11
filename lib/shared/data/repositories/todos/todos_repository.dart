@@ -5,7 +5,7 @@ import 'package:todo_app/shared/interfaces/todo_source.dart';
 import 'package:todo_app/shared/result_pattern.dart';
 
 class TodosRepository {
-  final _todoRepository = injection.get<TodoRepositoryInterface>();
+  final _todoRepository = injection.get<CrudTodoInterface>();
   final _todoSource = injection.get<TodoSourceInterface>();
 
   Future<void> insertTodos(List<TodoModel> todos) async {

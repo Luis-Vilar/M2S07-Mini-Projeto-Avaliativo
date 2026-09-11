@@ -2,7 +2,7 @@ import 'package:todo_app/shared/data/db_helper.dart';
 import 'package:todo_app/shared/data/models/todo/todo_model.dart';
 import 'package:todo_app/shared/interfaces/todo_repository.dart';
 
-class SqfliteTodoRepository implements TodoRepositoryInterface {
+class SqfliteCrudTodo implements CrudTodoInterface {
   @override
   Future<void> insertTodo(TodoModel todo) async {
     final db = await DbHelper.db;
