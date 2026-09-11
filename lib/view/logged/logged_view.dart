@@ -160,6 +160,10 @@ class _LoggedViewState extends State<LoggedView> {
             };
           },
         ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {},
+          child: Icon(Icons.add),
+        ),
       ),
     );
   }
