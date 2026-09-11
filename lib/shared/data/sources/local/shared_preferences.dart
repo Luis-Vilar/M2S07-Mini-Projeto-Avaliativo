@@ -17,13 +17,15 @@ Future<Result<UserLoggedModel>> getSessionData() async {
     final session = prefs.getString(sessionData);
 
     if (session == null) {
-      return Result.error(Exception('No hay una sesión guardada.'));
+      return Result.error(Exception('Não existe uma sessão salva.'));
     }
 
     final json = jsonDecode(session) as Map<String, dynamic>;
     return Result.ok(UserLoggedModel.fromJson(json));
   } catch (error) {
-    return Result.error(Exception('No se pudo recuperar la sesión: $error'));
+    return Result.error(
+      Exception('Não foi possível recuperar a sessão: $error'),
+    );
   }
 }
 
