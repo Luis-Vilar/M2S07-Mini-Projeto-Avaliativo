@@ -73,4 +73,15 @@ ThemeData darkTheme = ThemeData(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
     ),
   ),
+  //Estilo para el botón de agregar todo (y todos los FloatingActionButtons futuros)
+  floatingActionButtonTheme: FloatingActionButtonThemeData(
+    backgroundColor: darkPrimaryColor,
+    foregroundColor: Colors.white,
+    elevation: 4,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(
+        16,
+      ), // Mesma forma, mas com as cores escuras
+    ),
+  ),
 );

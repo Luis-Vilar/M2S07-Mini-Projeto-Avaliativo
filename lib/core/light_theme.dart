@@ -70,4 +70,15 @@ ThemeData lightTheme = ThemeData(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
     ),
   ),
+  //Estilo para el botón de agregar todo (y todos los FloatingActionButtons futuros)
+  floatingActionButtonTheme: FloatingActionButtonThemeData(
+    backgroundColor: primaryColor,
+    foregroundColor: Colors.white,
+    elevation: 4, // Uma sombra sutil para dar efeito de flutuação
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(
+        16,
+      ), // Cantos modernos combinando com os cards
+    ),
+  ),
 );
