@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_app/shared/data/models/user/user_model.dart';
-import 'package:todo_app/shared/result_pattern.dart';
+import 'package:todo_app/shared/utils/result_pattern.dart';
 
 final String sessionData = 'sessionData';
 

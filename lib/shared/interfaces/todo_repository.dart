@@ -1,5 +1,5 @@
 import 'package:todo_app/shared/data/models/todo/todo_model.dart';
-import 'package:todo_app/shared/result_pattern.dart';
+import 'package:todo_app/shared/utils/result_pattern.dart';
 
 abstract class TodoRepositoryInterface {
   Future<void> insertTodos(List<TodoModel> todos);

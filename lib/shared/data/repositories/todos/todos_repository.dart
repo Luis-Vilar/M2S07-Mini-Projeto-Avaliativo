@@ -3,7 +3,7 @@ import 'package:todo_app/shared/data/models/todo/todo_model.dart';
 import 'package:todo_app/shared/interfaces/crud_todo_repository.dart';
 import 'package:todo_app/shared/interfaces/todo_repository.dart';
 import 'package:todo_app/shared/interfaces/todo_source.dart';
-import 'package:todo_app/shared/result_pattern.dart';
+import 'package:todo_app/shared/utils/result_pattern.dart';
 
 class TodosRepository implements TodoRepositoryInterface {
   final _todoRepository = injection.get<CrudTodoInterface>();

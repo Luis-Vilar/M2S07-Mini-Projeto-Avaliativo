@@ -4,7 +4,7 @@ import 'package:todo_app/shared/data/models/todo/todo_model.dart';
 import 'package:todo_app/shared/data/models/user/user_model.dart';
 import 'package:todo_app/shared/data/sources/local/shared_preferences.dart';
 import 'package:todo_app/shared/interfaces/todo_repository.dart';
-import 'package:todo_app/shared/result_pattern.dart';
+import 'package:todo_app/shared/utils/result_pattern.dart';
 
 part 'todos_event.dart';
 part 'todos_state.dart';
