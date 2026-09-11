@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:todo_app/shared/interfaces/http_client.dart';
 import 'package:todo_app/shared/result_pattern.dart';
 
-final class HttpClientDioImplementation implements HttpClientInterface {
+final class HttpClientDio implements HttpClientInterface {
   final Dio _dio = Dio(BaseOptions(baseUrl: 'https://dummyjson.com/'));
 
   @override
