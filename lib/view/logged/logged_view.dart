@@ -215,7 +215,7 @@ class _LoggedViewState extends State<LoggedView> {
         ),
         Expanded(
           child: filteredTodos.isEmpty
-              ? const Center(child: Text('No hay tareas para este filtro.'))
+              ? const Center(child: Text('Sem tarefas para este filtro.'))
               : ListView.builder(
                   padding: const EdgeInsets.all(16),
                   itemCount: filteredTodos.length,
