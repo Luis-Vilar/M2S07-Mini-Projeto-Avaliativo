@@ -24,44 +24,47 @@ class TodoFilterToolbar extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          child: TextField(
-            controller: searchController,
-            onChanged: onSearchChanged,
-            decoration: InputDecoration(
-              labelText: 'Buscar tarefa',
-              suffixIcon: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SegmentedButton<TodoFilter>(
-                  segments: const [
-                    ButtonSegment(
-                      value: TodoFilter.all,
-                      label: Icon(Icons.all_inbox),
-                    ),
-                    ButtonSegment(
-                      value: TodoFilter.pending,
-                      label: Icon(Icons.pending),
-                    ),
-                    ButtonSegment(
-                      value: TodoFilter.completed,
-                      label: Icon(Icons.checklist),
-                    ),
-                  ],
-                  selected: {selectedFilter},
-                  showSelectedIcon: false,
-                  onSelectionChanged: (selection) {
-                    onFilterChanged(selection.first);
-                  },
+          child: TapRegion(
+            onTapOutside: (event) => FocusScope.of(context).unfocus(),
+            child: TextField(
+              controller: searchController,
+              onChanged: onSearchChanged,
+              decoration: InputDecoration(
+                labelText: 'Buscar tarefa',
+                suffixIcon: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SegmentedButton<TodoFilter>(
+                    segments: const [
+                      ButtonSegment(
+                        value: TodoFilter.all,
+                        label: Icon(Icons.all_inbox),
+                      ),
+                      ButtonSegment(
+                        value: TodoFilter.pending,
+                        label: Icon(Icons.pending),
+                      ),
+                      ButtonSegment(
+                        value: TodoFilter.completed,
+                        label: Icon(Icons.checklist),
+                      ),
+                    ],
+                    selected: {selectedFilter},
+                    showSelectedIcon: false,
+                    onSelectionChanged: (selection) {
+                      onFilterChanged(selection.first);
+                    },
+                  ),
                 ),
-              ),
-              prefixIcon: searchController.text.isEmpty
-                  ? null
-                  : IconButton(
-                      onPressed: onClearSearch,
-                      icon: const Icon(Icons.clear),
-                      tooltip: 'Limpar',
-                    ),
-              border: const OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(50)),
+                prefixIcon: searchController.text.isEmpty
+                    ? null
+                    : IconButton(
+                        onPressed: onClearSearch,
+                        icon: const Icon(Icons.clear),
+                        tooltip: 'Limpar',
+                      ),
+                border: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(50)),
+                ),
               ),
             ),
           ),
