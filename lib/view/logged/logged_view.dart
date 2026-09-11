@@ -86,11 +86,19 @@ class _LoggedViewState extends State<LoggedView> {
           ),
           actions: [
             ?tryAgain
-                ? IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.replay_outlined),
-                    tooltip: 'Recarregar',
-                    padding: const EdgeInsets.only(right: 8),
+                ? Builder(
+                    builder: (blocContext) {
+                      return IconButton(
+                        onPressed: () {
+                          blocContext.read<TodosBloc>().add(
+                            TodosSyncEvent(userId: user.id),
+                          );
+                        },
+                        icon: const Icon(Icons.replay_outlined),
+                        tooltip: 'Recarregar',
+                        padding: const EdgeInsets.only(right: 8),
+                      );
+                    },
                   )
                 : null,
             IconButton(
@@ -108,6 +116,12 @@ class _LoggedViewState extends State<LoggedView> {
                   .showSnackBar(SnackBar(content: Text(state.message)));
               setState(() {
                 tryAgain = true;
+              });
+            }
+
+            if (state is TodosSuccess) {
+              setState(() {
+                tryAgain = false;
               });
             }
           },
