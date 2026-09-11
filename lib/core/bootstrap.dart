@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:todo_app/core/injection.dart';
 import 'package:todo_app/core/main_app.dart';
-import 'package:todo_app/shared/data/db_helper.dart';
+import 'package:todo_app/shared/data/sources/local/db_helper.dart';
 
 void bootstrap() {
   runZonedGuarded(
