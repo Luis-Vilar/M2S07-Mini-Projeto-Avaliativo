@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-enum TodoFilter { all, pending, completed }
+import 'package:todo_app/shared/enums.dart';
 
 class TodoFilterToolbarComponent extends StatelessWidget {
   const TodoFilterToolbarComponent({
