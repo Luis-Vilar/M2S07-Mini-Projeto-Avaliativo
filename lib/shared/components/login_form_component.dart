@@ -44,13 +44,17 @@ class LoginFormComponent extends StatelessWidget {
                           style: TextStyle(
                             color: Colors.indigo,
                             fontSize: 28,
-                            fontWeight: .w600,
+                            fontWeight: .w700,
                           ),
                         ),
                         const Text(
                           'Organize suas tarefas e conquiste o seu dia.',
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 12, color: Colors.blue),
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.blue,
+                            fontWeight: .w600,
+                          ),
                         ),
                         const SizedBox(height: 20),
                         InputUserComponent(userController: userController),
@@ -58,7 +62,7 @@ class LoginFormComponent extends StatelessWidget {
                         InputPasswordComponent(
                           passwordController: passwordController,
                         ),
-                        const SizedBox(height: 35),
+                        const SizedBox(height: 20),
                         LoginButtonComponent(
                           formKey: formKey,
                           userController: userController,
