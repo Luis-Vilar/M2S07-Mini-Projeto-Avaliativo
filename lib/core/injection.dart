@@ -7,6 +7,7 @@ import 'package:todo_app/shared/implementations/sqflite_crud_todo_implementation
 import 'package:todo_app/shared/interfaces/auth.dart';
 import 'package:todo_app/shared/interfaces/http_client.dart';
 import 'package:todo_app/shared/interfaces/crud_todo_repository.dart';
+import 'package:todo_app/shared/interfaces/todo_repository.dart';
 import 'package:todo_app/shared/interfaces/todo_source.dart';
 
 final injection = GetIt.instance;
@@ -16,5 +17,5 @@ void initDependencyInjection() {
   injection.registerLazySingleton<CrudTodoInterface>(() => SqfliteCrudTodo());
   injection.registerFactory<AuthInterface>(() => AuthSource());
   injection.registerFactory<TodoSourceInterface>(() => TodoSource());
-  injection.registerFactory<TodosRepository>(() => TodosRepository());
+  injection.registerFactory<TodoRepositoryInterface>(() => TodosRepository());
 }
