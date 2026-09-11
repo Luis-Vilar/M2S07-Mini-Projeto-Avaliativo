@@ -6,27 +6,27 @@ import 'package:todo_app/shared/interfaces/todo_source.dart';
 import 'package:todo_app/shared/utils/result_pattern.dart';
 
 class TodosRepository implements TodoRepositoryInterface {
-  final _todoRepository = injection.get<CrudTodoInterface>();
+  final _todoCrud = injection.get<CrudTodoInterface>();
   final _todoSource = injection.get<TodoSourceInterface>();
 
   @override
   Future<void> insertTodos(List<TodoModel> todos) async {
     for (final todo in todos) {
-      await _todoRepository.insertTodo(todo);
+      await _todoCrud.insertTodo(todo);
     }
   }
 
   @override
-  Future<void> insertTodo(TodoModel todo) => _todoRepository.insertTodo(todo);
+  Future<void> insertTodo(TodoModel todo) => _todoCrud.insertTodo(todo);
 
   @override
-  Future<List<TodoModel>> getTodos() => _todoRepository.getTodos();
+  Future<List<TodoModel>> getTodos() => _todoCrud.getTodos();
 
   @override
-  Future<void> updateTodo(TodoModel todo) => _todoRepository.updateTodo(todo);
+  Future<void> updateTodo(TodoModel todo) => _todoCrud.updateTodo(todo);
 
   @override
-  Future<void> deleteTodo(int id) => _todoRepository.deleteTodo(id);
+  Future<void> deleteTodo(int id) => _todoCrud.deleteTodo(id);
 
   @override
   Future<Result<List<TodoModel>>> syncTodos(int userId) async {
@@ -48,5 +48,5 @@ class TodosRepository implements TodoRepositoryInterface {
   }
 
   @override
-  Future<void> deleteTodos() => _todoRepository.deleteTodos();
+  Future<void> deleteTodos() => _todoCrud.deleteTodos();
 }
