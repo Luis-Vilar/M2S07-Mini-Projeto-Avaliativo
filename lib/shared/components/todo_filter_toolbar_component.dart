@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 enum TodoFilter { all, pending, completed }
 
-class TodoFilterToolbar extends StatelessWidget {
-  const TodoFilterToolbar({
+class TodoFilterToolbarComponent extends StatelessWidget {
+  const TodoFilterToolbarComponent({
     super.key,
     required this.searchController,
     required this.selectedFilter,

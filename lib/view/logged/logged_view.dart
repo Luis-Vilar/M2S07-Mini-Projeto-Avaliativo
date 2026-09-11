@@ -4,7 +4,7 @@ import 'package:todo_app/core/routes.dart';
 import 'package:todo_app/shared/data/models/todo/todo_model.dart';
 import 'package:todo_app/shared/data/models/user/user_model.dart';
 import 'package:todo_app/shared/data/sources/local/shared_preferences.dart';
-import 'package:todo_app/shared/components/todo_filter_toolbar.dart';
+import 'package:todo_app/shared/components/todo_filter_toolbar_component.dart';
 import 'package:todo_app/view/splash_screen/splash_view.dart';
 import 'package:todo_app/view_models/bloc/todos_bloc.dart';
 
@@ -173,7 +173,7 @@ class _LoggedViewState extends State<LoggedView> {
 
     return Column(
       children: [
-        TodoFilterToolbar(
+        TodoFilterToolbarComponent(
           searchController: _searchController,
           selectedFilter: _filter,
           onSearchChanged: (_) => setState(() {}),
