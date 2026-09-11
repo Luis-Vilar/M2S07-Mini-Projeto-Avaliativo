@@ -1,6 +1,6 @@
 import 'package:todo_app/shared/data/sources/local/db_helper.dart';
 import 'package:todo_app/shared/data/models/todo/todo_model.dart';
-import 'package:todo_app/shared/interfaces/crud_todo_repository.dart';
+import 'package:todo_app/shared/interfaces/crud_todo.dart';
 
 class SqfliteCrudTodo implements CrudTodoInterface {
   @override

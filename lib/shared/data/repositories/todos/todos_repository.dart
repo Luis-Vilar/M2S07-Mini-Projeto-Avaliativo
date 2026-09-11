@@ -1,6 +1,6 @@
 import 'package:todo_app/core/injection.dart';
 import 'package:todo_app/shared/data/models/todo/todo_model.dart';
-import 'package:todo_app/shared/interfaces/crud_todo_repository.dart';
+import 'package:todo_app/shared/interfaces/crud_todo.dart';
 import 'package:todo_app/shared/interfaces/todo_repository.dart';
 import 'package:todo_app/shared/interfaces/todo_source.dart';
 import 'package:todo_app/shared/utils/result_pattern.dart';

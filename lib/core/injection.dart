@@ -6,7 +6,7 @@ import 'package:todo_app/shared/implementations/dio_implementation.dart';
 import 'package:todo_app/shared/implementations/sqflite_crud_todo_implementation.dart';
 import 'package:todo_app/shared/interfaces/auth.dart';
 import 'package:todo_app/shared/interfaces/http_client.dart';
-import 'package:todo_app/shared/interfaces/crud_todo_repository.dart';
+import 'package:todo_app/shared/interfaces/crud_todo.dart';
 import 'package:todo_app/shared/interfaces/todo_repository.dart';
 import 'package:todo_app/shared/interfaces/todo_source.dart';
 
