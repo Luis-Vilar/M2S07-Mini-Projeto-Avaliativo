@@ -62,9 +62,6 @@ class TodoFilterToolbarComponent extends StatelessWidget {
                         icon: const Icon(Icons.clear),
                         tooltip: 'Limpar',
                       ),
-                border: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(50)),
-                ),
               ),
             ),
           ),

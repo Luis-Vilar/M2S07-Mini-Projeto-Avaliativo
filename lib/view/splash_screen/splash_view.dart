@@ -11,15 +11,13 @@ class SplashView extends StatelessWidget {
           child: Column(
             mainAxisAlignment: .center,
             children: [
-              CircularProgressIndicator(
+              const CircularProgressIndicator(
                 padding: EdgeInsets.only(bottom: 12),
                 strokeWidth: 6,
-                color: Colors.blueAccent,
-                backgroundColor: Colors.blueGrey[100],
               ),
               Text(
                 'Carregando...',
-                style: TextStyle(fontWeight: .w600, color: Colors.blueGrey),
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
             ],
           ),

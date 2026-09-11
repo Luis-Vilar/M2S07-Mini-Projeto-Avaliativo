@@ -27,7 +27,6 @@ class _LoginButtonComponentState extends State<LoginButtonComponent> {
       builder: (context, state) {
         return SizedBox(
           width: double.infinity,
-          height: 55,
           child: ElevatedButton(
             onPressed: () async {
               if (!(widget.formKey.currentState?.validate() ?? false)) return;
@@ -43,21 +42,7 @@ class _LoginButtonComponentState extends State<LoginButtonComponent> {
               widget.userController.clear();
               widget.passwordController.clear();
             },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blueAccent,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
-              elevation: 2,
-            ),
-            child: const Text(
-              'Fazer Login',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-            ),
+            child: const Text('Fazer Login'),
           ),
         );
       },

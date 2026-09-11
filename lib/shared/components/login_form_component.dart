@@ -21,7 +21,7 @@ class LoginFormComponent extends StatelessWidget {
       child: LayoutBuilder(
         builder: (context, constraints) {
           return SingleChildScrollView(
-            padding: EdgeInsets.symmetric(horizontal: 30.0),
+            padding: const EdgeInsets.symmetric(horizontal: 30.0),
             child: ConstrainedBox(
               constraints: BoxConstraints(minHeight: constraints.maxHeight),
               child: Center(
@@ -38,23 +38,15 @@ class LoginFormComponent extends StatelessWidget {
                           height: 260,
                           fit: .contain,
                         ),
-                        const Text(
+                        Text(
                           'Bem-vindo de volta!',
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.indigo,
-                            fontSize: 28,
-                            fontWeight: .w700,
-                          ),
+                          style: Theme.of(context).textTheme.titleLarge,
                         ),
-                        const Text(
+                        Text(
                           'Organize suas tarefas e conquiste o seu dia.',
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.blue,
-                            fontWeight: .w600,
-                          ),
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         const SizedBox(height: 20),
                         InputUserComponent(userController: userController),

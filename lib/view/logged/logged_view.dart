@@ -77,10 +77,6 @@ class _LoggedViewState extends State<LoggedView> {
       create: (_) => TodosBloc()..add(TodosSyncEvent(userId: user.id)),
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.blue,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(bottom: Radius.circular(30.0)),
-          ),
           centerTitle: true,
           leading: Padding(
             padding: const EdgeInsets.only(left: 24),
@@ -98,14 +94,13 @@ class _LoggedViewState extends State<LoggedView> {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 18, fontWeight: .bold),
               ),
               Text(
                 user.email,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 10),
+                style: Theme.of(context).appBarTheme.toolbarTextStyle,
               ),
             ],
           ),
@@ -196,20 +191,16 @@ class _LoggedViewState extends State<LoggedView> {
                   itemBuilder: (context, index) {
                     final todo = filteredTodos[index];
                     return Card(
-                      color: todo.completed ? Colors.pink[100] : Colors.white,
                       child: CheckboxListTile(
                         value: todo.completed,
                         title: Text(
                           todo.todo,
-                          style: TextStyle(
-                            decoration: todo.completed
-                                ? TextDecoration.lineThrough
-                                : TextDecoration.none,
-                            color: todo.completed
-                                ? Colors.brown
-                                : Colors.black87,
-                            fontWeight: .bold,
-                          ),
+                          style: Theme.of(context).textTheme.bodyLarge
+                              ?.copyWith(
+                                decoration: todo.completed
+                                    ? TextDecoration.lineThrough
+                                    : TextDecoration.none,
+                              ),
                         ),
                         subtitle: Text('ID da Tarefa: ${todo.id}'),
                         onChanged: (completed) {
