@@ -4,6 +4,7 @@ import 'package:todo_app/core/routes.dart';
 import 'package:todo_app/shared/data/models/todo/todo_model.dart';
 import 'package:todo_app/shared/data/models/user/user_model.dart';
 import 'package:todo_app/shared/data/sources/local/shared_preferences.dart';
+import 'package:todo_app/shared/components/todo_filter_toolbar.dart';
 import 'package:todo_app/view/splash_screen/splash_view.dart';
 import 'package:todo_app/view_models/bloc/todos_bloc.dart';
 
@@ -16,6 +17,30 @@ class LoggedView extends StatefulWidget {
 
 class _LoggedViewState extends State<LoggedView> {
   bool tryAgain = false;
+  TodoFilter _filter = TodoFilter.all;
+  final TextEditingController _searchController = TextEditingController();
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  List<TodoModel> _filterTodos(List<TodoModel> todos) {
+    final searchText = _searchController.text.trim().toLowerCase();
+
+    return todos.where((todo) {
+      final matchesStatus = switch (_filter) {
+        TodoFilter.all => true,
+        TodoFilter.pending => !todo.completed,
+        TodoFilter.completed => todo.completed,
+      };
+      final matchesText = todo.todo.toLowerCase().contains(searchText);
+
+      return matchesStatus && matchesText;
+    }).toList();
+  }
+
   Future<void> _showLogoutDialog() async {
     final shouldLogout = await showDialog<bool>(
       context: context,
@@ -128,46 +153,7 @@ class _LoggedViewState extends State<LoggedView> {
           builder: (context, state) {
             return switch (state) {
               TodosLoading() => const Center(child: SplashView()),
-              TodosSuccess(:final todos) when todos.isEmpty => const Center(
-                child: Text('No hay tareas disponibles.'),
-              ),
-              TodosSuccess(:final todos) => ListView.builder(
-                padding: const EdgeInsets.all(16),
-                itemCount: todos.length,
-                itemBuilder: (context, index) {
-                  final todo = todos[index];
-                  return Card(
-                    color: todo.completed ? Colors.pink[100] : Colors.white,
-                    child: CheckboxListTile(
-                      value: todo.completed,
-                      title: Text(
-                        todo.todo,
-                        style: TextStyle(
-                          decoration: todo.completed
-                              ? TextDecoration.lineThrough
-                              : TextDecoration.none,
-                          color: todo.completed ? Colors.brown : Colors.black87,
-                          fontWeight: .bold,
-                        ),
-                      ),
-                      subtitle: Text('ID da Tarefa: ${todo.id}'),
-                      onChanged: (completed) {
-                        if (completed == null) return;
-                        context.read<TodosBloc>().add(
-                          TodosUpdateEvent(
-                            todo: TodoModel(
-                              id: todo.id,
-                              todo: todo.todo,
-                              completed: completed,
-                              userId: todo.userId,
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  );
-                },
-              ),
+              TodosSuccess(:final todos) => _buildTodosContent(context, todos),
               TodosError(:final message) => Center(
                 child: Padding(
                   padding: const EdgeInsets.all(36),
@@ -179,6 +165,72 @@ class _LoggedViewState extends State<LoggedView> {
           },
         ),
       ),
+    );
+  }
+
+  Widget _buildTodosContent(BuildContext context, List<TodoModel> todos) {
+    final filteredTodos = _filterTodos(todos);
+
+    return Column(
+      children: [
+        TodoFilterToolbar(
+          searchController: _searchController,
+          selectedFilter: _filter,
+          onSearchChanged: (_) => setState(() {}),
+          onClearSearch: () {
+            _searchController.clear();
+            setState(() {});
+          },
+          onFilterChanged: (filter) {
+            setState(() {
+              _filter = filter;
+            });
+          },
+        ),
+        Expanded(
+          child: filteredTodos.isEmpty
+              ? const Center(child: Text('No hay tareas para este filtro.'))
+              : ListView.builder(
+                  padding: const EdgeInsets.all(16),
+                  itemCount: filteredTodos.length,
+                  itemBuilder: (context, index) {
+                    final todo = filteredTodos[index];
+                    return Card(
+                      color: todo.completed ? Colors.pink[100] : Colors.white,
+                      child: CheckboxListTile(
+                        value: todo.completed,
+                        title: Text(
+                          todo.todo,
+                          style: TextStyle(
+                            decoration: todo.completed
+                                ? TextDecoration.lineThrough
+                                : TextDecoration.none,
+                            color: todo.completed
+                                ? Colors.brown
+                                : Colors.black87,
+                            fontWeight: .bold,
+                          ),
+                        ),
+                        subtitle: Text('ID da Tarefa: ${todo.id}'),
+                        onChanged: (completed) {
+                          if (completed == null) return;
+                          context.read<TodosBloc>().add(
+                            TodosUpdateEvent(
+                              todo: TodoModel(
+                                id: todo.id,
+                                todo: todo.todo,
+                                completed: completed,
+                                userId: todo.userId,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  },
+                ),
+        ),
+      ],
     );
   }
 }
