@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/shared/enums.dart';
+import 'package:todo_app/shared/utils/enums.dart';
 
 class TodoFilterToolbarComponent extends StatelessWidget {
   const TodoFilterToolbarComponent({
