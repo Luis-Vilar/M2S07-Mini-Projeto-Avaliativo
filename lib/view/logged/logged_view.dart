@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_app/core/routes.dart';
+import 'package:todo_app/shared/components/add_todo_dialog_component.dart';
 import 'package:todo_app/shared/components/list_card_component.dart';
 import 'package:todo_app/shared/data/models/todo/todo_model.dart';
 import 'package:todo_app/shared/data/models/user/user_model.dart';
@@ -68,6 +69,26 @@ class _LoggedViewState extends State<LoggedView> {
     await removeSessionData();
     if (!mounted) return;
     Navigator.pushNamedAndRemoveUntil(context, AppRoutes.login, (_) => false);
+  }
+
+  Future<void> _showAddTodoDialog(BuildContext blocContext, int userId) async {
+    final todoText = await showDialog<String>(
+      context: context,
+      builder: (_) => const AddTodoDialogComponent(),
+    );
+
+    if (todoText == null || todoText.isEmpty || !blocContext.mounted) return;
+
+    blocContext.read<TodosBloc>().add(
+      TodosCreateEvent(
+        todo: TodoModel(
+          id: DateTime.now().millisecondsSinceEpoch,
+          todo: todoText,
+          completed: false,
+          userId: userId,
+        ),
+      ),
+    );
   }
 
   @override
@@ -160,9 +181,14 @@ class _LoggedViewState extends State<LoggedView> {
             };
           },
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          child: Icon(Icons.add),
+        floatingActionButton: Builder(
+          builder: (blocContext) {
+            return FloatingActionButton(
+              onPressed: () => _showAddTodoDialog(blocContext, user.id),
+              tooltip: 'Adicionar tarefa',
+              child: const Icon(Icons.add),
+            );
+          },
         ),
       ),
     );
