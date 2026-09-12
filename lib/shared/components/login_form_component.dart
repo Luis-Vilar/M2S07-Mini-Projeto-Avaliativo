@@ -32,36 +32,29 @@ class LoginFormComponent extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: .stretch,
                       children: [
-                        const SizedBox(height: 60),
-                        const Center(
-                          child: Icon(
-                            Icons.person,
-                            size: 120,
-                            color: Colors.blue,
-                          ),
+                        Image.asset(
+                          'assets/images/logo.png',
+                          width: 260,
+                          height: 260,
+                          fit: .contain,
                         ),
-                        const SizedBox(height: 30),
-                        const Text(
+                        Text(
                           'Bem-vindo de volta!',
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 28, fontWeight: .w600),
+                          style: Theme.of(context).textTheme.titleLarge,
                         ),
-                        const SizedBox(height: 10),
-                        const Text(
+                        Text(
                           'Organize suas tarefas e conquiste o seu dia.',
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.blueGrey,
-                          ),
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
-                        const SizedBox(height: 40),
+                        const SizedBox(height: 20),
                         InputUserComponent(userController: userController),
                         const SizedBox(height: 20),
                         InputPasswordComponent(
                           passwordController: passwordController,
                         ),
-                        const SizedBox(height: 35),
+                        const SizedBox(height: 20),
                         LoginButtonComponent(
                           formKey: formKey,
                           userController: userController,

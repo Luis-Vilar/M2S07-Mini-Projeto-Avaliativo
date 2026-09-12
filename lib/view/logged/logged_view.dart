@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_app/core/routes.dart';
+import 'package:todo_app/shared/components/add_todo_dialog_component.dart';
+import 'package:todo_app/shared/components/list_card_component.dart';
 import 'package:todo_app/shared/data/models/todo/todo_model.dart';
 import 'package:todo_app/shared/data/models/user/user_model.dart';
 import 'package:todo_app/shared/data/sources/local/shared_preferences.dart';
 import 'package:todo_app/shared/components/todo_filter_toolbar_component.dart';
+import 'package:todo_app/shared/utils/enums.dart';
 import 'package:todo_app/view/splash_screen/splash_view.dart';
 import 'package:todo_app/view_models/bloc/todos_bloc.dart';
 
@@ -69,6 +72,26 @@ class _LoggedViewState extends State<LoggedView> {
     Navigator.pushNamedAndRemoveUntil(context, AppRoutes.login, (_) => false);
   }
 
+  Future<void> _showAddTodoDialog(BuildContext blocContext, int userId) async {
+    final todoText = await showDialog<String>(
+      context: context,
+      builder: (_) => const AddTodoDialogComponent(),
+    );
+
+    if (todoText == null || todoText.isEmpty || !blocContext.mounted) return;
+
+    blocContext.read<TodosBloc>().add(
+      TodosCreateEvent(
+        todo: TodoModel(
+          id: DateTime.now().millisecondsSinceEpoch,
+          todo: todoText,
+          completed: false,
+          userId: userId,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final user = ModalRoute.of(context)!.settings.arguments as UserLoggedModel;
@@ -77,10 +100,6 @@ class _LoggedViewState extends State<LoggedView> {
       create: (_) => TodosBloc()..add(TodosSyncEvent(userId: user.id)),
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.blue,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(bottom: Radius.circular(30.0)),
-          ),
           centerTitle: true,
           leading: Padding(
             padding: const EdgeInsets.only(left: 24),
@@ -98,14 +117,13 @@ class _LoggedViewState extends State<LoggedView> {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 18, fontWeight: .bold),
               ),
               Text(
                 user.email,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 10),
+                style: Theme.of(context).appBarTheme.toolbarTextStyle,
               ),
             ],
           ),
@@ -164,6 +182,15 @@ class _LoggedViewState extends State<LoggedView> {
             };
           },
         ),
+        floatingActionButton: Builder(
+          builder: (blocContext) {
+            return FloatingActionButton(
+              onPressed: () => _showAddTodoDialog(blocContext, user.id),
+              tooltip: 'Adicionar tarefa',
+              child: const Icon(Icons.add),
+            );
+          },
+        ),
       ),
     );
   }
@@ -189,43 +216,15 @@ class _LoggedViewState extends State<LoggedView> {
         ),
         Expanded(
           child: filteredTodos.isEmpty
-              ? const Center(child: Text('No hay tareas para este filtro.'))
+              ? const Center(child: Text('Sem tarefas para este filtro.'))
               : ListView.builder(
                   padding: const EdgeInsets.all(16),
                   itemCount: filteredTodos.length,
                   itemBuilder: (context, index) {
                     final todo = filteredTodos[index];
-                    return Card(
-                      color: todo.completed ? Colors.pink[100] : Colors.white,
-                      child: CheckboxListTile(
-                        value: todo.completed,
-                        title: Text(
-                          todo.todo,
-                          style: TextStyle(
-                            decoration: todo.completed
-                                ? TextDecoration.lineThrough
-                                : TextDecoration.none,
-                            color: todo.completed
-                                ? Colors.brown
-                                : Colors.black87,
-                            fontWeight: .bold,
-                          ),
-                        ),
-                        subtitle: Text('ID da Tarefa: ${todo.id}'),
-                        onChanged: (completed) {
-                          if (completed == null) return;
-                          context.read<TodosBloc>().add(
-                            TodosUpdateEvent(
-                              todo: TodoModel(
-                                id: todo.id,
-                                todo: todo.todo,
-                                completed: completed,
-                                userId: todo.userId,
-                              ),
-                            ),
-                          );
-                        },
-                      ),
+                    return ListCardComponent(
+                      todo: todo,
+                      listViewContext: context,
                     );
                   },
                 ),

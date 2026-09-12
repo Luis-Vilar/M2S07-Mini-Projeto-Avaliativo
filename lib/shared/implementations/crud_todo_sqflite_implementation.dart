@@ -1,10 +1,10 @@
-import 'package:todo_app/shared/data/db_helper.dart';
+import 'package:todo_app/shared/data/sources/local/db_helper.dart';
 import 'package:todo_app/shared/data/models/todo/todo_model.dart';
-import 'package:todo_app/shared/interfaces/todo_repository.dart';
+import 'package:todo_app/shared/interfaces/crud_todo.dart';
 
-class SqfliteTodoRepository implements TodoRepositoryInterface {
+class SqfliteCrudTodo implements CrudTodoInterface {
   @override
-  Future<void> insertTodo(TodoModel todo) async {
+  Future<void> createTodo(TodoModel todo) async {
     final db = await DbHelper.db;
     final data = {
       'id': todo.id,
@@ -22,13 +22,13 @@ class SqfliteTodoRepository implements TodoRepositoryInterface {
   }
 
   @override
-  Future<void> deleteTodos() async {
+  Future<void> deleteAllTodos() async {
     final db = await DbHelper.db;
     await db.delete('todos');
   }
 
   @override
-  Future<List<TodoModel>> getTodos() async {
+  Future<List<TodoModel>> readTodos() async {
     final db = await DbHelper.db;
     final rows = await db.query('todos');
 

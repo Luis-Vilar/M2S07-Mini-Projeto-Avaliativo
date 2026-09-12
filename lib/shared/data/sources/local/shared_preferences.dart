@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_app/shared/data/models/user/user_model.dart';
-import 'package:todo_app/shared/result_pattern.dart';
+import 'package:todo_app/shared/utils/result_pattern.dart';
 
 final String sessionData = 'sessionData';
 
@@ -16,14 +16,22 @@ Future<Result<UserLoggedModel>> getSessionData() async {
     final prefs = await SharedPreferences.getInstance();
     final session = prefs.getString(sessionData);
 
+    //! inicio de Gambiarra
+    // pequeno delay para dar tempo de renderizar a Image.asset do
+    // SplashScreen cuando inicializa o app y verifica a sessão.
+    await Future.delayed(Duration(milliseconds: 400));
+    //! fim da gambiarra...
+
     if (session == null) {
-      return Result.error(Exception('No hay una sesión guardada.'));
+      return Result.error(Exception('Não existe uma sessão salva.'));
     }
 
     final json = jsonDecode(session) as Map<String, dynamic>;
     return Result.ok(UserLoggedModel.fromJson(json));
   } catch (error) {
-    return Result.error(Exception('No se pudo recuperar la sesión: $error'));
+    return Result.error(
+      Exception('Não foi possível recuperar a sessão: $error'),
+    );
   }
 }
 

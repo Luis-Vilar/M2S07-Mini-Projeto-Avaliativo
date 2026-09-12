@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-enum TodoFilter { all, pending, completed }
+import 'package:todo_app/shared/utils/enums.dart';
 
 class TodoFilterToolbarComponent extends StatelessWidget {
   const TodoFilterToolbarComponent({
@@ -62,9 +61,6 @@ class TodoFilterToolbarComponent extends StatelessWidget {
                         icon: const Icon(Icons.clear),
                         tooltip: 'Limpar',
                       ),
-                border: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(50)),
-                ),
               ),
             ),
           ),
