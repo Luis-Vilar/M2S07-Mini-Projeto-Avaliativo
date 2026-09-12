@@ -1,4 +1,4 @@
-import 'package:todo_app/shared/result_pattern.dart';
+import 'package:todo_app/shared/utils/result_pattern.dart';
 
 abstract class HttpClientInterface {
   Future<Result> get(String endpoint, {Map<String, String>? headers});

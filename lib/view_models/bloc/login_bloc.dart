@@ -6,7 +6,7 @@ import 'package:todo_app/core/injection.dart';
 import 'package:todo_app/shared/data/models/user/user_model.dart';
 import 'package:todo_app/shared/data/sources/local/shared_preferences.dart';
 import 'package:todo_app/shared/interfaces/auth.dart';
-import 'package:todo_app/shared/result_pattern.dart';
+import 'package:todo_app/shared/utils/result_pattern.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';
