@@ -16,6 +16,12 @@ Future<Result<UserLoggedModel>> getSessionData() async {
     final prefs = await SharedPreferences.getInstance();
     final session = prefs.getString(sessionData);
 
+    //! inicio de Gambiarra
+    // pequeno delay para dar tempo de renderizar a Image.asset do
+    // SplashScreen cuando inicializa o app y verifica a sessão.
+    await Future.delayed(Duration(milliseconds: 400));
+    //! fim da gambiarra...
+
     if (session == null) {
       return Result.error(Exception('Não existe uma sessão salva.'));
     }
