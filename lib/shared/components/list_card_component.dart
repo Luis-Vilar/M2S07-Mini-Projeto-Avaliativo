@@ -9,6 +9,33 @@ class ListCardComponent extends StatelessWidget {
   final TodoModel todo;
   final BuildContext listViewContext;
 
+  void _showDeleteDialog() async {
+    final shouldDelete = await showDialog<bool>(
+      context: listViewContext,
+      builder: (dialogContext) {
+        return AlertDialog(
+          title: const Text('Deletar tarefa?'),
+          content: const Text('Tem certeza que deseja deletar a tarefa?'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(dialogContext, false),
+              child: const Text('Cancelar'),
+            ),
+            FilledButton(
+              onPressed: () => Navigator.pop(dialogContext, true),
+              child: const Text('Deletar'),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (shouldDelete != true) return;
+    if (listViewContext.mounted) {
+      listViewContext.read<TodosBloc>().add(TodosDeleteEvent(id: todo.id));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -26,11 +53,7 @@ class ListCardComponent extends StatelessWidget {
         ),
         subtitle: Text('ID da Tarefa: ${todo.id}'),
         secondary: IconButton(
-          onPressed: () {
-            listViewContext.read<TodosBloc>().add(
-              TodosDeleteEvent(id: todo.id),
-            );
-          },
+          onPressed: _showDeleteDialog,
           icon: Icon(Icons.delete, color: Colors.redAccent),
         ),
         onChanged: (completed) {
