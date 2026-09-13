@@ -61,5 +61,5 @@ final class UserLoggedModel extends UserModel {
   String toString() =>
       'UserLoggedModel(username: $username, id: $id, email: $email, '
       'firstName: $firstName, lastName: $lastName, gender: $gender, '
-      'image: $image, accessToken: $accessToken, refreshToken: $refreshToken)';
+      'image: $image)';
 }
