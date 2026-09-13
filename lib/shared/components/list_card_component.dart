@@ -36,10 +36,12 @@ class ListCardComponent extends StatelessWidget {
           ),
         ),
         subtitle: Text('ID da Tarefa: ${todo.id}'),
-        secondary: IconButton(
-          onPressed: _showDeleteDialog,
-          icon: Icon(Icons.delete, color: Colors.redAccent),
-        ),
+        secondary: todo.completed
+            ? IconButton(
+                onPressed: _showDeleteDialog,
+                icon: Icon(Icons.delete, color: Colors.redAccent),
+              )
+            : null,
         onChanged: (completed) {
           if (completed == null) return;
           listViewContext.read<TodosBloc>().add(
