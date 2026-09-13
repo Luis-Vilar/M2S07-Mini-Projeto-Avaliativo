@@ -1,6 +1,6 @@
-# Todo App
+# Notitas
 
-Aplicativo mobile desenvolvido em Flutter para gerenciamento de tarefas. O projeto realiza autenticação, consumo de APIs, persistência local com SQLite, armazenamento de sessão com Shared Preferences, Ícone personalizado do launcher com Flutter Icons Launcher, injeção de dependencias com GetIt e gerenciamento de estados com BLoC.
+Notitas e um aplicativo mobile desenvolvido em Flutter para gerenciamento de tarefas. O projeto realiza autenticação, consumo de APIs, persistência local com SQLite, armazenamento de sessão com Shared Preferences, Ícone personalizado do launcher com Flutter Icons Launcher, injeção de dependencias com GetIt e gerenciamento de estados com BLoC.
 
 ## Objetivo
 
