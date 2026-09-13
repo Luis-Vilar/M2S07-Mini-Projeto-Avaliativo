@@ -128,22 +128,6 @@ class _LoggedViewState extends State<LoggedView> {
             ],
           ),
           actions: [
-            ?tryAgain
-                ? Builder(
-                    builder: (blocContext) {
-                      return IconButton(
-                        onPressed: () {
-                          blocContext.read<TodosBloc>().add(
-                            TodosSyncEvent(userId: user.id),
-                          );
-                        },
-                        icon: const Icon(Icons.replay_outlined),
-                        tooltip: 'Recarregar',
-                        padding: const EdgeInsets.only(right: 8),
-                      );
-                    },
-                  )
-                : null,
             IconButton(
               onPressed: _showLogoutDialog,
               icon: const Icon(Icons.logout),
@@ -183,13 +167,21 @@ class _LoggedViewState extends State<LoggedView> {
           },
         ),
         floatingActionButton: Builder(
-          builder: (blocContext) {
-            return FloatingActionButton(
-              onPressed: () => _showAddTodoDialog(blocContext, user.id),
-              tooltip: 'Adicionar tarefa',
-              child: const Icon(Icons.add),
-            );
-          },
+          builder: (blocContext) => tryAgain
+              ? FloatingActionButton(
+                  backgroundColor: Colors.amber,
+                  foregroundColor: Colors.blueAccent,
+                  onPressed: () => blocContext.read<TodosBloc>().add(
+                    TodosSyncEvent(userId: user.id),
+                  ),
+                  tooltip: 'Recarregar',
+                  child: const Icon(Icons.replay),
+                )
+              : FloatingActionButton(
+                  onPressed: () => _showAddTodoDialog(blocContext, user.id),
+                  tooltip: 'Adicionar tarefa',
+                  child: const Icon(Icons.add),
+                ),
         ),
       ),
     );
