@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo_app/shared/components/confirm_dialog.dart';
 import 'package:todo_app/shared/data/models/todo/todo_model.dart';
 import 'package:todo_app/view_models/bloc/todos_bloc.dart';
 
@@ -9,32 +10,15 @@ class ListCardComponent extends StatelessWidget {
   final TodoModel todo;
   final BuildContext listViewContext;
 
-  void _showDeleteDialog() async {
-    final shouldDelete = await showDialog<bool>(
-      context: listViewContext,
-      builder: (dialogContext) {
-        return AlertDialog(
-          title: const Text('Deletar tarefa?'),
-          content: const Text('Tem certeza que deseja deletar a tarefa?'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(dialogContext, false),
-              child: const Text('Cancelar'),
-            ),
-            FilledButton(
-              onPressed: () => Navigator.pop(dialogContext, true),
-              child: const Text('Deletar'),
-            ),
-          ],
-        );
-      },
-    );
-
-    if (shouldDelete != true) return;
-    if (listViewContext.mounted) {
-      listViewContext.read<TodosBloc>().add(TodosDeleteEvent(id: todo.id));
-    }
-  }
+  void _showDeleteDialog() => confirmDialog(
+    context: listViewContext,
+    action: () =>
+        listViewContext.read<TodosBloc>().add(TodosDeleteEvent(id: todo.id)),
+    titleText: 'Deletar tarefa?',
+    contentText: 'Tem certeza que deseja deletar a tarefa?',
+    notConfirmButtonText: 'Cancelar',
+    confirmButtonText: 'Deletar',
+  );
 
   @override
   Widget build(BuildContext context) {

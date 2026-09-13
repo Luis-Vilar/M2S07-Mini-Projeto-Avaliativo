@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_app/core/routes.dart';
 import 'package:todo_app/shared/components/add_todo_dialog_component.dart';
+import 'package:todo_app/shared/components/confirm_dialog.dart';
 import 'package:todo_app/shared/components/list_card_component.dart';
 import 'package:todo_app/shared/data/models/todo/todo_model.dart';
 import 'package:todo_app/shared/data/models/user/user_model.dart';
 import 'package:todo_app/shared/data/sources/local/shared_preferences.dart';
 import 'package:todo_app/shared/components/todo_filter_toolbar_component.dart';
 import 'package:todo_app/shared/utils/enums.dart';
-import 'package:todo_app/view/splash_screen/splash_view.dart';
 import 'package:todo_app/view_models/bloc/todos_bloc.dart';
+import 'package:todo_app/view/splash_screen/splash_view.dart';
 
 class LoggedView extends StatefulWidget {
   const new({super.key});
@@ -44,33 +45,23 @@ class _LoggedViewState extends State<LoggedView> {
     }).toList();
   }
 
-  Future<void> _showLogoutDialog() async {
-    final shouldLogout = await showDialog<bool>(
-      context: context,
-      builder: (dialogContext) {
-        return AlertDialog(
-          title: const Text('Fechar sessão'),
-          content: const Text('Tem certeza que deseja fechar a sessão atual?'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(dialogContext, false),
-              child: const Text('Cancelar'),
-            ),
-            FilledButton(
-              onPressed: () => Navigator.pop(dialogContext, true),
-              child: const Text('Sair'),
-            ),
-          ],
+  void _showLogoutDialog() => confirmDialog(
+    context: context,
+    action: () async {
+      await removeSessionData();
+      if (mounted) {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          AppRoutes.login,
+          (_) => false,
         );
-      },
-    );
-
-    if (shouldLogout != true) return;
-
-    await removeSessionData();
-    if (!mounted) return;
-    Navigator.pushNamedAndRemoveUntil(context, AppRoutes.login, (_) => false);
-  }
+      }
+    },
+    titleText: 'Fechar sessão',
+    contentText: 'Tem certeza que deseja fechar a sessão atual?',
+    notConfirmButtonText: 'Cancelar',
+    confirmButtonText: 'Sair',
+  );
 
   Future<void> _showAddTodoDialog(BuildContext blocContext, int userId) async {
     final todoText = await showDialog<String>(
