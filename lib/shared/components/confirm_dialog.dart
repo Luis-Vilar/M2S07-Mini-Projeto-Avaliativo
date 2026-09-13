@@ -1,8 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 void confirmDialog({
   required BuildContext context,
-  required Function action,
+  required FutureOr<void> Function() action,
   required String titleText,
   required String contentText,
   required String notConfirmButtonText,
