@@ -38,7 +38,7 @@ O aplicativo permite que o usuário:
 O projeto utiliza a API pública DummyJSON:
 
 - Login: <https://dummyjson.com/auth/login>
-- Tarefas do Usuario: <https://dummyjson.com/todos/user/userId'>
+- Tarefas do Usuario: <https://dummyjson.com/todos/user/userId>
 
 ## Usuários para teste
 
