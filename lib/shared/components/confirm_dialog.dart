@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-void confirmDialog({
+Future<void> confirmDialog({
   required BuildContext context,
   required FutureOr<void> Function() action,
   required String titleText,
@@ -31,7 +31,6 @@ void confirmDialog({
   );
 
   if (shouldContinue != true) return;
-  if (context.mounted) {
-    action();
-  }
+  if (!context.mounted) return;
+  await action();
 }
