@@ -1,6 +1,6 @@
-# Todo App
+# Notitas
 
-Aplicativo mobile desenvolvido em Flutter para gerenciamento de tarefas. O projeto realiza autenticação, consumo de APIs, persistência local com SQLite, armazenamento de sessão com Shared Preferences, Ícone personalizado do launcher com Flutter Icons Launcher, injeção de dependencias com GetIt e gerenciamento de estados com BLoC.
+**Notitas** e um aplicativo mobile desenvolvido em **Flutter** para gerenciamento de tarefas. O projeto realiza autenticação, consumo de **APIs**, persistência local com **SQLite**, armazenamento de sessão com **Shared Preferences**, Ícone personalizado do launcher com **Flutter Icons Launcher**, injeção de dependencias com **GetIt** e gerenciamento de estados com **BLoC**.
 
 ## Objetivo
 
@@ -13,10 +13,10 @@ O aplicativo permite que o usuário:
 - Filtre tarefas por status e texto;
 - Cadastre novas tarefas;
 - Marque tarefas como concluídas;
-- Elimine tarefas localmente;
+- Elimine tarefas localmente caso estejam concluidas;
 - Utilize os dados armazenados no SQLite mesmo após a sincronização;
 - Receba mensagens de erro quando houver falha de conexão;
-- Tente novamente o carregamento da API.
+- Tente novamente o carregamento da API caso esteja logado e não recebeu resposta da API.
 
 ## Tecnologias utilizadas
 
@@ -38,7 +38,7 @@ O aplicativo permite que o usuário:
 O projeto utiliza a API pública DummyJSON:
 
 - Login: <https://dummyjson.com/auth/login>
-- Tarefas do Usuario: <https://dummyjson.com/todos/user/userId'>
+- Tarefas do Usuario: <https://dummyjson.com/todos/user/userId>
 
 ## Usuários para teste
 
@@ -60,10 +60,10 @@ Senha: michaelwpass
 
 Ao iniciar o aplicativo, a splash screen verifica se existe uma sessão salva no `SharedPreferences`.
 
-- Com sessão válida: navega para a tela Home;
-- Sem sessão válida: navega para a tela de Login.
+- Com sessão válida: navega para a tela  **LoggedView**;
+- Sem sessão válida: navega para a tela  **LoginView** .
 
-### Login
+### LoginView
 
 A tela de login possui:
 
@@ -75,7 +75,7 @@ A tela de login possui:
 - Exibição de mensagens de erro;
 - Salvamento dos dados do usuário no `SharedPreferences`.
 
-### Home
+### LoggedView
 
 A tela principal apresenta:
 
@@ -118,6 +118,7 @@ lib/
 ├── shared/
 │   ├── components/
 │   │   ├── add_todo_dialog_component.dart
+│   │   ├── confirm_dialog.dart
 │   │   ├── input_password_component.dart
 │   │   ├── input_user_component.dart
 │   │   ├── list_card_component.dart
@@ -247,7 +248,7 @@ A interface apresenta mensagens para situações como:
 - Demora na resposta da API;
 - Erros ao acessar o banco local.
 
-Quando a API de tarefas não responde por algum motivo, a Home exibe uma mensagem de erro especifico, dispara un ScaffoldMessenger e disponibiliza a opção **Tentar novamente**. por meio de um ícone na AppBar;
+Quando a API de tarefas não responde por algum motivo, a Home exibe uma mensagem de erro especifico, dispara un ScaffoldMessenger e disponibiliza a opção **Tentar novamente**. para isto o floatingActionButton do Scaffold muda de função de adicionar tarefa para recarregar  e também muda de cor para ser mais chamativo.
 
 ## Padrão Result
 
@@ -270,7 +271,7 @@ O projeto utiliza conceitos exigidos na atividade:
 - Polimorfismo;
 - `Map<String, dynamic>`;
 - Listas;
-- Métodos `map`, `where` e `firstWhere`;
+- Métodos `map`, `where` e `any`;
 - Funções e arrow functions;
 - Condicionais `if/else`;
 - Operadores lógicos e ternários;
@@ -303,8 +304,8 @@ flutter doctor
 Clone o repositório e acesse a pasta do projeto:
 
 ```bash
-git clone URL_DO_REPOSITORIO
-cd -M2S07-Mini-Projeto-Avaliativo
+git clone git@github.com:Luis-Vilar/M2S07-Mini-Projeto-Avaliativo.git
+cd M2S07-Mini-Projeto-Avaliativo
 ```
 
 Instale as dependências:
@@ -313,7 +314,7 @@ Instale as dependências:
 flutter pub get
 ```
 
-Execute o aplicativo:
+Inicialize o emulador Android ou Ios , logo enseguida execute:
 
 ```bash
 flutter run
@@ -333,16 +334,16 @@ Inicialização
      v
 Splash Screen
      |
-     ├── Sessão salva → Home
+     ├── Sessão salva → LoggedView
      |
-     └── Sem sessão → Login
+     └── Sem sessão →   LoginView
                             |
                             v
                      Autenticação na API
                             |
                 ├── Erro → Mensagem de erro
                 |
-                └── Sucesso → Salva sessão → Home
+                └── Sucesso → Salva sessão → LoggedView
                                              |
                                              v
                                   API de tarefas
