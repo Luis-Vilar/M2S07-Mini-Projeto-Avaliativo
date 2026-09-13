@@ -31,20 +31,21 @@ class TodosRepository implements TodoRepositoryInterface {
   @override
   Future<Result<List<TodoModel>>> syncTodos(int userId) async {
     final localTodos = await getTodos();
+    final remoteTodos = await _todoSource.getTodos(userId);
+
     final hasTodosFromAnotherUser = localTodos.any(
       (todo) => todo.userId != userId,
     );
 
-    if (hasTodosFromAnotherUser) {
+    if (hasTodosFromAnotherUser && remoteTodos is Ok<List<TodoModel>>) {
       await deleteTodos();
     }
 
-    final result = await _todoSource.getTodos(userId);
-    if (result is Ok<List<TodoModel>>) {
-      await insertTodos(result.value);
+    if (remoteTodos is Ok<List<TodoModel>>) {
+      await insertTodos(remoteTodos.value);
       return Result.ok(await getTodos());
     }
-    return result;
+    return remoteTodos;
   }
 
   @override
