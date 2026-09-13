@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo_app/shared/components/confirm_dialog.dart';
 import 'package:todo_app/shared/data/models/todo/todo_model.dart';
 import 'package:todo_app/view_models/bloc/todos_bloc.dart';
 
@@ -8,6 +9,16 @@ class ListCardComponent extends StatelessWidget {
 
   final TodoModel todo;
   final BuildContext listViewContext;
+
+  void _showDeleteDialog() => confirmDialog(
+    context: listViewContext,
+    action: () =>
+        listViewContext.read<TodosBloc>().add(TodosDeleteEvent(id: todo.id)),
+    titleText: 'Deletar tarefa?',
+    contentText: 'Tem certeza que deseja deletar a tarefa?',
+    notConfirmButtonText: 'Cancelar',
+    confirmButtonText: 'Deletar',
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -25,14 +36,12 @@ class ListCardComponent extends StatelessWidget {
           ),
         ),
         subtitle: Text('ID da Tarefa: ${todo.id}'),
-        secondary: IconButton(
-          onPressed: () {
-            listViewContext.read<TodosBloc>().add(
-              TodosDeleteEvent(id: todo.id),
-            );
-          },
-          icon: Icon(Icons.delete, color: Colors.redAccent),
-        ),
+        secondary: todo.completed
+            ? IconButton(
+                onPressed: _showDeleteDialog,
+                icon: Icon(Icons.delete, color: Colors.redAccent),
+              )
+            : null,
         onChanged: (completed) {
           if (completed == null) return;
           listViewContext.read<TodosBloc>().add(
